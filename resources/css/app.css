@@ -1,0 +1,36 @@
+.dashboard-container {
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+nav.sidebar {
+    padding: 15px 21px;
+    background-color: #191c24;
+    color: #fff;
+}
+nav.sidebar .user-info .user-pic {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 100%;
+    margin-right: 15px;
+}
+nav.sidebar .user-info {
+    display: flex;
+
+    align-items: center;
+
+    padding: 15px 0;
+}
+nav.sidebar .user-info .user-status h3 {
+    font-size: 19px;
+    margin-bottom: 0px;
+}
+nav.sidebar .user-info .user-status p {
+    color: #ffffff94;
+    margin-bottom: 0;
+}
+nav.sidebar .side-links ul {
+    list-style: none;
+    padding: 0;
+}
