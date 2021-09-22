@@ -1,3 +1,7 @@
+html,
+body {
+    height: 100%;
+}
 * {
     box-sizing: border-box;
 }
@@ -125,7 +129,8 @@ nav.sidebar .logo::after {
     background-color: #191c24;
     width: 100%;
     display: none;
-    box-shadow: 1px 1px 5px -2px #fff;
+    box-shadow: 1px 1px 5px 1px #00000094;
+    z-index: 1;
 }
 .dashboard-container .mainbody nav.navbar .acc-container .dropdown-acc h4 {
     padding: 15px 13px;
@@ -245,7 +250,7 @@ label[for="audio-upl"] {
     height: 13px;
     background-color: #00d25b;
     position: absolute;
-    top: 39px;
+    top: 13px;
 }
 .dashboard-container .mainbody .content .audio-index .music-container {
     width: 100%;
@@ -261,8 +266,57 @@ label[for="audio-upl"] {
     justify-content: space-between;
     background-color: #2a3037;
     padding: 16px 20px;
-
     margin-bottom: 16px;
+    flex-direction: column;
+}
+.dashboard-container
+    .mainbody
+    .content
+    .audio-index
+    .music-container
+    .music-single
+    .music-single-item {
+    display: flex;
+    justify-content: space-between;
+}
+.dashboard-container
+    .mainbody
+    .content
+    .audio-index
+    .music-container
+    .music-single
+    .music-handle
+    .music-progress-container {
+    width: 100%;
+    height: 4px;
+    background-color: #ffffff42;
+    cursor: pointer;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.dashboard-container
+    .mainbody
+    .content
+    .audio-index
+    .music-container
+    .music-single
+    .music-handle {
+    display: flex;
+    justify-content: center;
+}
+.dashboard-container
+    .mainbody
+    .content
+    .audio-index
+    .music-container
+    .music-single
+    .music-handle
+    .music-progress-container
+    .music-progress {
+    background-color: #fff;
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
 }
 .dashboard-container
     .mainbody
@@ -294,4 +348,76 @@ label[for="audio-upl"] {
     align-items: center;
     color: #000;
     font-size: 25px;
+}
+.dashboard-container .mainbody .content .audio-index .add-new-btn a {
+    background-color: #00d25b;
+    color: #fff;
+    padding: 9px 23px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.dashboard-container .mainbody .content .audio-index .add-new-btn {
+    margin-bottom: 25px;
+}
+.page-title-container {
+    position: relative;
+}
+.dashboard-container
+    .mainbody
+    .content
+    .audio-index
+    table.table.table-bordered {
+    color: #fff;
+}
+.dashboard-container .mainbody .content .audio-index small {
+    color: red;
+}
+section.ftco-section {
+    background-color: #191c24;
+    color: #fff;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+section.ftco-section {
+    background-color: #191c24;
+    color: #fff;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.row.justify-content-center.main-body-login
+    .login-wrap.p-4.p-md-5
+    h3.text-center.mb-4 {
+    font-size: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 14px;
+}
+.row.justify-content-center.main-body-login .form-control {
+    background-color: #2a3038;
+    margin-bottom: 16px;
+    height: 63px;
+    font-size: 17px;
+    border: 1px solid;
+}
+.row.justify-content-center.main-body-login {
+    background-color: #2a3037;
+    margin-top: 118px;
+    border-radius: 14px;
+    padding-top: 26px;
+}
+.row.justify-content-center.main-body-login
+    button.btn.btn-primary.rounded.submit.p-3.px-5.form-control {
+    background-color: #00d25b;
+    border: 1px solid #0000001a;
 }

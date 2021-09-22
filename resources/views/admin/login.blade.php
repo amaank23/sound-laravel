@@ -11,18 +11,19 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 </head>
 
 <body>
     <section class="ftco-section">
         <div class="container">
-            <div class="row justify-content-center">
+            <!-- <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <!-- <h2 class="heading-section">Login</h2> -->
+                    <h2 class="heading-section">Login</h2>
                 </div>
-            </div>
-            <div class="row justify-content-center">
+            </div> -->
+            <div class="row justify-content-center main-body-login">
                 <div class="col-md-6 col-lg-5">
                     <div class="login-wrap p-4 p-md-5">
                         <div class="icon d-flex align-items-center justify-content-center">
@@ -49,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary rounded submit p-3 px-5">Get Started</button>
+                                <button type="submit" class="btn btn-primary rounded submit p-3 px-5 form-control">Login</button>
                             </div>
                         </form>
                     </div>

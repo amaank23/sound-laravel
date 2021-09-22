@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -13,7 +14,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $all_genres = Genre::all();
+        return view('admin.genre.index', ['genres' => $all_genres]);
     }
 
     /**
@@ -23,7 +25,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.genre.create');
     }
 
     /**
@@ -34,7 +36,10 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $genre = new Genre();
+        $genre->genre = $request->genre;
+        $genre->save();
+        return back();
     }
 
     /**
@@ -79,6 +84,7 @@ class GenreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Genre::destroy($id);
+        return back();
     }
 }

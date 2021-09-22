@@ -32,10 +32,10 @@
             <div class="side-links">
                 <ul>
                     <li><a href="{{ route('admin.audio') }}">Audio</a></li>
-                    <li><a href="#">Video</a></li>
-                    <li><a href="#">Artist</a></li>
-                    <li><a href="#">Genre</a></li>
-                    <li><a href="#">Album</a></li>
+                    <li><a href="{{ route('admin.video') }}">Video</a></li>
+                    <li><a href="{{ route('admin.artist') }}">Artist</a></li>
+                    <li><a href="{{ route('admin.genre') }}">Genre</a></li>
+                    <li><a href="{{ route('admin.album') }}">Album</a></li>
                 </ul>
             </div>
         </nav>

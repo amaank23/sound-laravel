@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artist;
 use Illuminate\Http\Request;
 
 class ArtistController extends Controller
@@ -13,7 +14,8 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        //
+        $all_artists = Artist::all();
+        return view('admin.artist.index', ['artists' => $all_artists]);
     }
 
     /**
@@ -23,7 +25,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.artist.create');
     }
 
     /**
@@ -34,7 +36,10 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $artist = new Artist();
+        $artist->artist_name = $request->artist;
+        $artist->save();
+        return back();
     }
 
     /**
@@ -79,6 +84,7 @@ class ArtistController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Artist::destroy($id);
+        return back();
     }
 }
