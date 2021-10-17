@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audio;
+use App\Models\Language;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class LanguageController extends Controller
@@ -13,7 +16,8 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        //
+        $all_languages = Language::all();
+        return view('admin.language.index', ['languages' => $all_languages]);
     }
 
     /**
@@ -23,7 +27,7 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.language.create');
     }
 
     /**
@@ -34,7 +38,10 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $language = new Language();
+        $language->language = $request->language;
+        $language->save();
+        return back();
     }
 
     /**
@@ -79,6 +86,18 @@ class LanguageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Language::destroy($id);
+        return back();
+    }
+    public function language($id)
+    {
+        $audios = Audio::where('language', $id)->get();
+        $vidoes = Video::where('language', $id)->get();
+        $language = Language::find($id);
+        return view('languageSingle', [
+            'audios' => $audios,
+            'language' => $language['language'],
+            'vidoes' => $vidoes
+        ]);
     }
 }

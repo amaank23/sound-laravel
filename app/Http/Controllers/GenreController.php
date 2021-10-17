@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Audio;
 use App\Models\Genre;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -86,5 +88,12 @@ class GenreController extends Controller
     {
         Genre::destroy($id);
         return back();
+    }
+    public function genre($id)
+    {
+        $audios = Audio::where('genre', $id)->get();
+        $vidoes = Video::where('genre', $id)->get();
+        $genre = Genre::find($id);
+        return view('genreSingle', ['audios' => $audios, 'genre' => $genre->genre, 'vidoes' => $vidoes]);
     }
 }

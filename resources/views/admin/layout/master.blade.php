@@ -20,7 +20,7 @@
     <div class="dashboard-container">
         <nav class="sidebar">
             <div class="logo">
-                <h2>Sound</h2>
+                <h2><a href="{{ url('/') }}">Sound</a></h2>
             </div>
             <div class="user-info">
                 <div class="user-pic"></div>
@@ -36,6 +36,8 @@
                     <li><a href="{{ route('admin.artist') }}">Artist</a></li>
                     <li><a href="{{ route('admin.genre') }}">Genre</a></li>
                     <li><a href="{{ route('admin.album') }}">Album</a></li>
+                    <li><a href="{{ route('admin.language') }}">Language</a></li>
+                    <li><a href="{{ route('admin.users') }}">Manage Users</a></li>
                 </ul>
             </div>
         </nav>

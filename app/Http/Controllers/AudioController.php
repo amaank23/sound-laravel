@@ -6,8 +6,12 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Audio;
 use App\Models\Genre;
+use App\Models\Language;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Exists;
 
 class AudioController extends Controller
 {
@@ -32,7 +36,8 @@ class AudioController extends Controller
         $data = [
             'artists' => Artist::all(),
             'genres' => Genre::all(),
-            'albums' => Album::all()
+            'albums' => Album::all(),
+            'languages' => Language::all()
         ];
         return view('admin.audio.create', $data);
     }
@@ -54,16 +59,24 @@ class AudioController extends Controller
             'description.required' => 'Description must be of max 500 words',
             'audioFile' => 'File format not supported, format must be of mp3, ogg, wav'
         ]);
-        $fileName = time() . '.' . $request->audioFile->extension();
+        $audioFileName = time() . '.' . $request->audioFile->extension();
 
-        $request->audioFile->move(public_path('uploads'), $fileName);
+        $request->audioFile->move(public_path('uploads'), $audioFileName);
+
+        if ($request->exists('coverFile')) {
+            $coverFileName = time() . '_cover_' . '.' . $request->coverFile->extension();
+            $request->coverFile->move(public_path('uploads'), $coverFileName);
+        }
+
         $audio = new Audio();
         $audio->title = $request->title;
         $audio->description = $request->description;
-        $audio->audio_file = $fileName;
+        $audio->audio_file = $audioFileName;
+        if ($request->exists('coverFile')) $audio->cover = $coverFileName;
         $audio->artist = $request->artist;
         $audio->genre = $request->genre;
         $audio->album = $request->album;
+        $audio->language = $request->language;
         $audio->year = $request->year;
         $audio->save();
         return redirect()->route('admin.audio');
@@ -88,7 +101,15 @@ class AudioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $audio = Audio::find($id);
+        $data = [
+            'artists' => Artist::all(),
+            'genres' => Genre::all(),
+            'albums' => Album::all(),
+            'languages' => Language::all(),
+            'audio' => $audio
+        ];
+        return view('admin.audio.update', $data);
     }
 
     /**
@@ -100,7 +121,35 @@ class AudioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $audio = Audio::find($id);
+
+        if ($audio->title !== $request->title) $audio->title = $request->title;
+        if ($audio->description !== $request->description) $audio->description = $request->description;
+        if ($audio->artist !== $request->artist) $audio->artist = $request->artist;
+        if ($audio->genre !== $request->genre) $audio->genre = $request->genre;
+        if ($audio->album !== $request->album) $audio->album = $request->album;
+        if ($audio->language !== $request->language) $audio->language = $request->language;
+        if ($audio->year !== $request->year) $audio->year = $request->year;
+        if ($request->exists('audioFile')) {
+            Storage::delete($audio['audio_file']);
+            $audioFileName = time() . '.' . $request->audioFile->extension();
+            $request->audioFile->move(public_path('uploads'), $audioFileName);
+
+            $audio->audio_file = $audioFileName;
+        }
+        if ($request->exists('coverFile')) {
+            if ($audio->cover !== null) {
+                Storage::delete($audio->cover);
+            }
+            $coverFileName = time() . '_cover_' . '.' . $request->coverFile->extension();
+            $request->coverFile->move(public_path('uploads'), $coverFileName);
+
+            $audio->cover = $coverFileName;
+        }
+
+        $audio->save();
+
+        return redirect()->route('admin.audio');
     }
 
     /**
@@ -115,7 +164,38 @@ class AudioController extends Controller
             'id' => $id
         ])->first();
         Storage::delete($get_file_name['audio_file']);
+        Storage::delete($get_file_name['cover']);
         Audio::destroy($id);
         return back();
+    }
+
+    public function play($id)
+    {
+        $audio = Audio::find($id);
+        return view('audioPlayer', ['audio' => $audio]);
+    }
+    public function single($id)
+    {
+        $audio = Audio::find($id);
+        $language = Language::find($audio['language']);
+        $genre = Genre::find($audio['genre']);
+        $artist = Artist::find($audio['artist']);
+        $album = Album::find($audio['album']);
+        $reviews = Review::where([
+            'song_id' => $id,
+            'song_type' => 'audio'
+        ])->get();
+        foreach ($reviews as $review) {
+            $review->user_id = User::find($review->user_id)->name;
+        }
+        $data = [
+            'audio' => $audio,
+            'language' => $language,
+            'genre' => $genre,
+            'artist' => $artist,
+            'album' => $album,
+            'reviews' => $reviews
+        ];
+        return view('audioSingle', $data);
     }
 }

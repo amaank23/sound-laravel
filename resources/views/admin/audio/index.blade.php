@@ -2,7 +2,7 @@
 
 
 @section('content')
-<div class="audio-index" style="height: 100vh;">
+<div class="audio-index">
     <div class="page-title-container">
         <h1>All Audio</h1>
     </div>
@@ -24,6 +24,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </form>
+                    <a href="{{ route('admin.audio.edit', ['id' => $audio['id']]) }}"><i class="fas fa-edit"></i></a>
                 </div>
             </div>
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Audio;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
@@ -86,5 +88,12 @@ class AlbumController extends Controller
     {
         Album::destroy($id);
         return back();
+    }
+    public function album($id)
+    {
+        $audios = Audio::where('album', $id)->get();
+        $vidoes = Video::where('album', $id)->get();
+        $albumTitle = Album::find($id);
+        return view('albumSingle', ['audios' => $audios, 'title' => $albumTitle->title, 'vidoes' => $vidoes]);
     }
 }

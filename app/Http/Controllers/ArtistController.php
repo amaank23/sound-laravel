@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\Audio;
+use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArtistController extends Controller
 {
@@ -36,8 +39,30 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
+
+        if ($request->exists('id')) {
+            $artist = Artist::find($request->id);
+
+            if ($request->exists('artist')) {
+                $artist->artist_name = $request->artist;
+            }
+            if ($request->exists('artistImg')) {
+                if ($artist->artistImg) {
+                    Storage::delete($artist->artistImg);
+                }
+                $fileName = time() . '_artist_' . '.' . $request->artistImg->extension();
+                $request->artistImg->move(public_path('uploads'), $fileName);
+                $artist->artistImg = $fileName;
+            }
+            $artist->save();
+            return back();
+        }
+        $fileName = time() . '_artist_' . '.' . $request->artistImg->extension();
+        $request->artistImg->move(public_path('uploads'), $fileName);
+
         $artist = new Artist();
         $artist->artist_name = $request->artist;
+        $artist->artistImg = $fileName;
         $artist->save();
         return back();
     }
@@ -84,7 +109,16 @@ class ArtistController extends Controller
      */
     public function destroy($id)
     {
+        $artist = Artist::find($id);
+        Storage::delete($artist['artistImg']);
         Artist::destroy($id);
         return back();
+    }
+    public function artist($id)
+    {
+        $audios = Audio::where('artist', $id)->get();
+        $videos = Video::where('artist', $id)->get();
+        $artistName = Artist::find($id);
+        return view('artistSingle', ['audios' => $audios, 'artist_name' => $artistName->artist_name, 'vidoes' => $videos]);
     }
 }

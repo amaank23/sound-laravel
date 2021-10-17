@@ -4,7 +4,7 @@
 @section('content')
 <div class="audio-index">
     <div class="page-title-container">
-        <h1>Add Audio</h1>
+        <h1>Add Video</h1>
     </div>
     <form action="{{ route('admin.video.add') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -26,6 +26,7 @@
         @error('videoFile')
         <small>{{$message}}</small>
         @enderror
+        <input type="file" name="coverFile" class="form-control" id="">
         <div class="select-option">
             <select name="artist" id="" class="form-control">
                 <option value="">Select Artist</option>

@@ -26,6 +26,7 @@
         @error('audioFile')
         <small>{{$message}}</small>
         @enderror
+        <input type="file" name="coverFile" class="form-control" id="">
         <div class="select-option">
             <select name="artist" id="" class="form-control">
                 <option value="">Select Artist</option>
@@ -37,6 +38,12 @@
                 <option value="">Select Album</option>
                 @foreach($albums as $album)
                 <option value="{{ $album['id'] }}">{{ $album['title'] }}</option>
+                @endforeach
+            </select>
+            <select name="language" id="" class="form-control">
+                <option value="">Select Language</option>
+                @foreach($languages as $language)
+                <option value="{{ $language['id'] }}">{{ $language['language'] }}</option>
                 @endforeach
             </select>
         </div>
@@ -52,6 +59,7 @@
                 @for($i = 1960; $i <= 2021; $i++) <option value="{{ $i }}">{{ $i }}</option>
                     @endfor
             </select>
+
         </div>
         <button type="submit" class="form-control">Add Audio</button>
 
