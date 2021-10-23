@@ -637,14 +637,16 @@ section.latest-music .latest-music-container .music-info h4 {
 }
 .music-controls .music-progress-container {
     width: 100%;
-    height: 10px;
+    height: 2px;
     background-color: #00d25b33;
     margin-bottom: 8px;
+    cursor: pointer;
 }
 .music-controls .music-progress-container .music-progress {
     width: 0%;
     background-color: #00d25b;
     height: inherit;
+    position: relative;
 }
 .music-actions i.fas.fa-play {
     margin-left: 20px;
@@ -866,4 +868,13 @@ div#playlist-container button {
     width: 100%;
     height: 420px;
     background-color: #000;
+}
+.hand {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #00d25b;
+    right: 0;
+    top: -5px;
+    border-radius: 50%;
 }

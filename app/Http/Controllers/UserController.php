@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -17,38 +19,60 @@ class UserController extends Controller
     }
     public function loginUser(Request $request)
     {
-        $request->validate([
+        // $request->validate([
+        //     'email' => 'required',
+        //     'password' => 'required'
+        // ]);
+
+        // $email = $request->email;
+        // $password = $request->password;
+
+        // $user = User::where([
+        //     'email' => $email,
+        //     'role' => 2
+        // ])->first();
+        // if (!$user) {
+        //     return back()->withErrors([
+        //         'notRegistered' => 'Email is not Registered'
+        //     ]);
+        // }
+
+        // $checkForPassword = Hash::check($password, $user->password);
+
+        // if (!$checkForPassword) {
+        //     return back()->withErrors([
+        //         'passwordNotMatch' => 'Password Does not Match with the Associated Email'
+        //     ]);
+        // }
+
+        // $request->session()->put('user_id', $user->id);
+        // $request->session()->put('user_name', $user->name);
+        // $request->session()->put('is_authenticated', true);
+        // $request->session()->put('role', 'user');
+
+        // return redirect('/');
+
+        $credentials = $request->validate([
             'email' => 'required',
             'password' => 'required'
         ]);
+        $email = $credentials['email'];
+        $password = $credentials['password'];
 
-        $email = $request->email;
-        $password = $request->password;
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'role' => 2])) {
+            $request->session()->regenerate();
 
-        $user = User::where([
-            'email' => $email,
-            'role' => 2
-        ])->first();
-        if (!$user) {
-            return back()->withErrors([
-                'notRegistered' => 'Email is not Registered'
-            ]);
-        }
+            $user = Auth::user();
 
-        $checkForPassword = Hash::check($password, $user->password);
-
-        if (!$checkForPassword) {
-            return back()->withErrors([
-                'passwordNotMatch' => 'Password Does not Match with the Associated Email'
-            ]);
-        }
-
-        $request->session()->put('user_id', $user->id);
-        $request->session()->put('user_name', $user->name);
-        $request->session()->put('is_authenticated', true);
-        $request->session()->put('role', 'user');
-
-        return redirect('/');
+            $request->session()->put('user_id', $user->id);
+            $request->session()->put('user_name', $user->name);
+            $request->session()->put('is_authenticated', true);
+            $request->session()->put('role', 'user');
+            return redirect()->intended('/');
+        };
+        return back()->withErrors([
+            'passwordNotMatch' => 'Password Does not Match with the Associated Email'
+        ]);
     }
     public function register()
     {
@@ -97,6 +121,9 @@ class UserController extends Controller
         $newUser->phone_number = $phone;
         $newUser->role = 2;
         $newUser->save();
+
+        // event(new Registered($newUser));
+
         return redirect('/login');
     }
     public function index()
@@ -161,6 +188,7 @@ class UserController extends Controller
         session()->pull('user_name');
         session()->pull('is_authenticated');
         session()->pull('role');
+        Auth::logout();
         return redirect('/login');
     }
 }

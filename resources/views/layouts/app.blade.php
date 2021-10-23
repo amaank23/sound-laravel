@@ -39,8 +39,8 @@
                     <li><a href="{{ route('genre.get') }}">Genre</a></li>
                     <li><a href="{{ route('album.get') }}">Album</a></li>
                     <li><a href="{{ route('language.get') }}">Language</a></li>
-                    <!-- <li><a href="">Playlists</a></li>
-                    <li><a id="create-playlist">Create Playlist</a></li> -->
+                    <li><a href="">Playlists</a></li>
+                    <li><a id="create-playlist">Create Playlist</a></li>
                 </ul>
             </div>
         </nav>

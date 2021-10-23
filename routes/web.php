@@ -14,6 +14,9 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 use App\Models\Language;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +36,7 @@ Route::post('/admin/auth', [AdminController::class, 'auth'])->name('admin.auth')
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-Route::group(['middleware' => ['myAuth']], function () {
+Route::group(['middleware' => ['verified', 'auth']], function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/audio/{id}/play', [AudioController::class, 'play'])->name('audio.play');
     Route::get('/audio/{id}', [AudioController::class, 'single'])->name('audio.single.get');
@@ -115,3 +118,22 @@ Route::post('/register', [UserController::class, 'registerUser'])->name('registe
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // File Serving Route
 Route::get('/file/{name}', [FileController::class, 'index'])->name('file.get');
+
+
+Route::get('/email/verify', function () {
+    $user = Auth::user();
+    if ($user->email_verified_at) {
+        return redirect('/');
+    }
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');

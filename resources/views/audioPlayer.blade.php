@@ -8,7 +8,9 @@
     </div>
     <div class="music-controls">
         <div class="music-progress-container">
-            <div class="music-progress"></div>
+            <div class="music-progress">
+                <div class="hand"></div>
+            </div>
         </div>
         <div class="music-actions">
             <i class="fas fa-play" id="audio-btn"></i>
