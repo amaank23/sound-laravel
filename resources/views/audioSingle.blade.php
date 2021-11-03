@@ -33,8 +33,8 @@
                     <div class="reviews">
                         <div class="section-title-container">
                             <h2>Reviews & Ratings</h2>
-                            <div class="liner"></div>
                         </div>
+                        @if(Auth::check())
                         <form action="{{ route('audio.review.store', ['id' => $audio['id']]) }}" method="POST">
                             @csrf
                             <textarea rows="4" class="form-control" name="review" id="" cols="30" rows="10"></textarea>
@@ -55,6 +55,7 @@
                             <input type="hidden" name="song_type" value="audio">
                             <button class="form-control" type="submit">Review</button>
                         </form>
+                        @endif
                         <div class="reviews-colection">
                             @foreach($reviews as $review)
                             <div class="review-container">

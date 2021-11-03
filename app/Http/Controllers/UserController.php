@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function login()
     {
-        if (!session()->get('is_authenticated')) {
+        if (!Auth::check()) {
             return view('auth.login');
         }
         return redirect('/');

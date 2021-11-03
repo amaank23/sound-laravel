@@ -14,6 +14,35 @@ function dropDownFunc(){
 }
 
 dropDownFunc();
+function dropPlaylistFunc(){
+    const drop = document.getElementsByClassName('dropmenu-btn');
+    const addToPlaylistBtn = document.getElementsByClassName('add-to-playlist-btn');
+    const playlistModelContainer = document.getElementById('playlist-container-modal');
+
+
+    [...drop].forEach(item => {
+        let clicked = false;
+        item.addEventListener('click', () => {
+            const target = item.parentElement.parentElement.childNodes[5];
+            if(clicked)  {
+                target.style.display = 'none'
+                clicked = false;
+                return;
+            }
+            target.style.display = 'block';
+            clicked = true;
+        });
+
+        [...addToPlaylistBtn].forEach(item => {
+            item.addEventListener('click', () => {
+                playlistModelContainer.style.visibility = 'visible';   
+                showPlaylists(item.id.split('-')[1], item.id.split('-')[0]);
+            })
+        })
+    })
+}
+
+dropPlaylistFunc();
 
 
 function createPlaylist(){
@@ -66,6 +95,7 @@ function createPlaylist(){
         xhttp.onload = () => {
             if(xhttp.status) {
                 playlistModal.style.visibility = 'hidden';
+                location.reload();
             }
         }
         xhttp.open("POST", "/playlist", true);
@@ -80,7 +110,7 @@ function createPlaylist(){
 createPlaylist();
 
 
-function showPlaylists(){
+function showPlaylists(songId, songType){
     const token = document.querySelector('meta[name="_token"]').getAttribute('content');
     var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -93,8 +123,10 @@ function showPlaylists(){
                     let tr = document.createElement('div');
                     tr.innerHTML = `
                     <div class="playlist-container">
-                        <form method="POST">
+                        <form action="/playlist/${playlist.id}" method="POST">
                             <input type="hidden" name="_token" value="${token}">
+                            <input type="hidden" name="song_type" value="${songType}">
+                            <input type="hidden" name="song_id" value="${songId}">
                             <button>${playlist.name}</button>
                         </form>
                     </div>
@@ -109,5 +141,3 @@ function showPlaylists(){
         xhttp.open("GET", "/ajax/playlists", true);
         xhttp.send();
 }
-
-showPlaylists();

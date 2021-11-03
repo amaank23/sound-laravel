@@ -41,7 +41,7 @@
                 </ul>
             </div>
         </nav>
-        <div class="mainbody">
+        <div class="mainbody" style="width: 84%;">
             <nav class="navbar">
                 <div class="acc-container">
                     <div class="navbar-account">

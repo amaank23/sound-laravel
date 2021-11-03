@@ -6,24 +6,33 @@
     <section class="latest-music">
         <div class="section-title-container">
             <h2>Latest Musics</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($audios as $music)
-            <div class="col-3">
-                <a href="{{ route('audio.single.get', ['id' => $music['id']]) }}">
-                    <div class="latest-music-container">
+            <div class="col-md-2">
+                <div class="latest-music-container">
+
+                    <a href="{{ route('audio.single.get', ['id' => $music['id']]) }}">
                         <div class="music-img-container">
                             <img src="{{ asset('uploads/'.$music['cover']) }}" alt="">
                             <div class="playBtn-container">
                                 <i class="fas fa-play"></i>
                             </div>
                         </div>
-                        <div class="music-info">
-                            <h4>{{ $music['title'] }}</h4>
+
+                    </a>
+                    <div class="music-info">
+                        <h4>{{ $music['title'] }}</h4>
+                        @if(Auth::check())
+                        <div>
+                            <i class="fas fa-chevron-down dropmenu-btn"></i>
                         </div>
+                        <div class="dropmenu">
+                            <button class="add-to-playlist-btn" id="audio-{{ $music['id'] }}">Add to Playlist</button>
+                        </div>
+                        @endif
                     </div>
-                </a>
+                </div>
             </div>
             @endforeach
         </div>

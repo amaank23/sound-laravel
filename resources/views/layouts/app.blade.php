@@ -20,12 +20,11 @@
 
 <body>
     <div class="dashboard-container front">
-        <nav class="sidebar">
+        <!-- <nav class="sidebar">
             <div class="logo">
                 <h2><a href="{{ url('/') }}">Sound</a></h2>
             </div>
             <div class="user-info">
-                <!-- <div class="user-pic"></div> -->
                 <div class="user-status">
                     <h3>{{ session('user_name') }}</h3>
                     <p>{{ session('role') }}</p>
@@ -43,17 +42,45 @@
                     <li><a id="create-playlist">Create Playlist</a></li>
                 </ul>
             </div>
-        </nav>
+        </nav> -->
         <div class="mainbody">
             <nav class="navbar">
-
-                <div class="searchbar-container">
+                <div class="logo">
+                    <i class="fas fa-music"></i>
+                    <h2><a href="{{ url('/') }}">SOUND</a></h2>
+                </div>
+                <!-- <div class="searchbar-container">
                     <form action="{{ route('song.search') }}">
                         <input type="text" name="text" placeholder="Search The Music, Video, Artist, Album, Language, Genre">
                         <button><i class="fas fa-search"></i></button>
                     </form>
-                </div>
+                </div> -->
+                <nav class="secondary-nav">
+                    <div class="secondary-links">
+                        <ul>
+                            <li><a href="{{ route('audio.get') }}">Audio</a></li>
+                            <li><a href="{{ route('video.get') }}">Video</a></li>
+                            <li><a href="{{ route('artist.get') }}">Artist</a></li>
+                            <li><a href="{{ route('genre.get') }}">Genre</a></li>
+                            <li><a href="{{ route('album.get') }}">Album</a></li>
+                            <li><a href="{{ route('language.get') }}">Language</a></li>
+                            @if(Auth::check())
+                            <li><a href="{{ route('playlists.get') }}">Playlists</a></li>
+                            <li><a id="create-playlist">Create Playlist</a></li>
+                            @endif
+                        </ul>
+                </nav>
                 <div class="acc-container">
+                    <div class="btn-container">
+                        <button><i class="fas fa-search" id="search-bar"></i></button>
+                        @if(!Auth::check())
+                        <a href="{{ route('register') }}">Register</a>
+                        <a href="{{ route('login') }}">Login</a>
+
+                        @endif
+                    </div>
+                    @if(Auth::check())
+
                     <div class="navbar-account">
                         <!-- <div class="user-pic"></div> -->
                         <h4>{{ session('user_name') }}</h4>
@@ -65,12 +92,19 @@
                             <li><a href="{{ route('logout') }}" id="logoutBtn">Logout</a></li>
                         </ul>
                     </div>
+                    @endif
                 </div>
             </nav>
+            <div class="search-bar-container">
+                <form action="{{ route('song.search') }}" method="get">
+                    <input id="search-input" class="form-control" type="text" name="text" placeholder="Enter Song Name, Artist, Genre, Language etc">
+                </form>
+            </div>
+
             <div class="content">
                 @yield('content')
             </div>
-            <!-- <div class="playlist-modal" id="playlist-modal">
+            <div class="playlist-modal" id="playlist-modal">
                 <div class="modal-container" id="modal-container">
                     <h2>Create Playlist</h2>
                     <form>
@@ -84,10 +118,29 @@
                 <div id="playlist-container">
 
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 
+
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        const searchInput = document.getElementById('search-input');
+
+        let clickedSearchIcon = false;
+        searchBar.addEventListener('click', () => {
+
+            if (clickedSearchIcon) {
+
+                searchInput.style.visibility = "hidden";
+                clickedSearchIcon = false;
+                return;
+            }
+
+            searchInput.style.visibility = "visible";
+            clickedSearchIcon = true;
+        });
+    </script>
 </body>
 
 </html>

@@ -35,29 +35,34 @@ Route::get('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
 Route::get('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+Route::get('/', [HomeController::class, 'index']);
+
+Route::get('/audio/{id}/play', [AudioController::class, 'play'])->name('audio.play');
+Route::get('/audio/{id}', [AudioController::class, 'single'])->name('audio.single.get');
+Route::get('/video/{id}/play', [VideoController::class, 'play'])->name('video.play');
+Route::get('/video/{id}', [VideoController::class, 'single'])->name('video.single.get');
+Route::get('/audio', [HomeController::class, 'audio'])->name('audio.get');
+Route::get('/video', [HomeController::class, 'video'])->name('video.get');
+Route::get('/artist', [HomeController::class, 'artist'])->name('artist.get');
+Route::get('/genre', [HomeController::class, 'genre'])->name('genre.get');
+Route::get('/album', [HomeController::class, 'album'])->name('album.get');
+Route::get('/language', [HomeController::class, 'language'])->name('language.get');
+Route::get('/language/{id}', [LanguageController::class, 'language'])->name('language.get.single');
+Route::get('/artist/{id}', [ArtistController::class, 'artist'])->name('artist.get.single');
+Route::get('/genre/{id}', [GenreController::class, 'genre'])->name('genre.get.single');
+Route::get('/album/{id}', [AlbumController::class, 'album'])->name('album.get.single');
+Route::get('/search', [HomeController::class, 'search'])->name('song.search');
 
 Route::group(['middleware' => ['verified', 'auth']], function () {
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('/audio/{id}/play', [AudioController::class, 'play'])->name('audio.play');
-    Route::get('/audio/{id}', [AudioController::class, 'single'])->name('audio.single.get');
-    Route::get('/video/{id}/play', [VideoController::class, 'play'])->name('video.play');
-    Route::get('/video/{id}', [VideoController::class, 'single'])->name('video.single.get');
-    Route::get('/audio', [HomeController::class, 'audio'])->name('audio.get');
-    Route::get('/video', [HomeController::class, 'video'])->name('video.get');
-    Route::get('/artist', [HomeController::class, 'artist'])->name('artist.get');
-    Route::get('/genre', [HomeController::class, 'genre'])->name('genre.get');
-    Route::get('/album', [HomeController::class, 'album'])->name('album.get');
-    Route::get('/language', [HomeController::class, 'language'])->name('language.get');
-    Route::get('/language/{id}', [LanguageController::class, 'language'])->name('language.get.single');
-    Route::get('/artist/{id}', [ArtistController::class, 'artist'])->name('artist.get.single');
-    Route::get('/genre/{id}', [GenreController::class, 'genre'])->name('genre.get.single');
-    Route::get('/album/{id}', [AlbumController::class, 'album'])->name('album.get.single');
+
     Route::post('/audio/review/{id}', [ReviewController::class, 'audio'])->name('audio.review.store');
     Route::post('/video/review/{id}', [ReviewController::class, 'video'])->name('video.review.store');
-    // Route::post('/playlist', [PlaylistController::class, 'store'])->name('playlist.store');
-    // Route::get('/playlists', [HomeController::class, 'playlists'])->name('playlists.get');
-    // Route::get('/ajax/playlists', [PlaylistController::class, 'index']);
-    Route::get('/search', [HomeController::class, 'search'])->name('song.search');
+    Route::post('/playlist', [PlaylistController::class, 'store'])->name('playlist.store');
+    Route::delete('/playlist/{id}', [PlaylistController::class, 'delete'])->name('playlist.delete');
+    Route::get('/playlists', [HomeController::class, 'playlists'])->name('playlists.get');
+    Route::get('/ajax/playlists', [PlaylistController::class, 'index']);
+    Route::post('/playlist/{id}', [PlaylistController::class, 'storeSongToPlaylist'])->name('playlist.save');
+    Route::get('/playlist/{id}', [PlaylistController::class, 'play'])->name('playlist.get');
 });
 
 Route::group(['middleware' => ['adminAuth']], function () {

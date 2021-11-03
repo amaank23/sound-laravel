@@ -6,7 +6,6 @@
     <div class="artists">
         <div class="section-title-container">
             <h2>Artists</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($artists as $artist)

@@ -8,7 +8,6 @@
     <div class="genres">
         <div class="section-title-container">
             <h2>Genres</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($genres as $genre)

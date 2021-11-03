@@ -6,30 +6,36 @@
     <section class="latest-music">
         <div class="section-title-container">
             <h2>{{$language}}</h2>
-            <div class="liner"></div>
         </div>
         <div class="section-title-container">
             <h2>Musics</h2>
-            <div class="liner"></div>
         </div>
 
         {{ count($audios) > 0 ? '' : 'No Musics' }}
         <div class="row">
             @foreach($audios as $music)
             <div class="col-3">
-                <a href="{{ route('audio.single.get', ['id' => $music['id']]) }}">
-                    <div class="latest-music-container">
+                <div class="latest-music-container">
+                    <a href="{{ route('audio.single.get', ['id' => $music['id']]) }}">
                         <div class="music-img-container">
                             <img src="{{ asset('uploads/'.$music['cover']) }}" alt="">
                             <div class="playBtn-container">
                                 <i class="fas fa-play"></i>
                             </div>
                         </div>
-                        <div class="music-info">
-                            <h4>{{ $music['title'] }}</h4>
+                    </a>
+                    <div class="music-info">
+                        <h4>{{ $music['title'] }}</h4>
+                        @if(Auth::check())
+                        <div>
+                            <i class="fas fa-chevron-down dropmenu-btn"></i>
                         </div>
+                        <div class="dropmenu">
+                            <button class="add-to-playlist-btn" id="audio-{{ $music['id'] }}">Add to Playlist</button>
+                        </div>
+                        @endif
                     </div>
-                </a>
+                </div>
             </div>
             @endforeach
         </div>
@@ -37,26 +43,33 @@
     <section class="latest-music">
         <div class="section-title-container">
             <h2>Videos</h2>
-            <div class="liner"></div>
         </div>
 
         {{ count($vidoes) > 0 ? '' : 'No Vidoes' }}
         <div class="row">
             @foreach($vidoes as $music)
             <div class="col-3">
-                <a href="{{ route('video.single.get', ['id' => $music['id']]) }}">
-                    <div class="latest-music-container">
+                <div class="latest-music-container">
+                    <a href="{{ route('video.single.get', ['id' => $music['id']]) }}">
                         <div class="music-img-container">
                             <img src="{{ asset('uploads/'.$music['cover']) }}" alt="">
                             <div class="playBtn-container">
                                 <i class="fas fa-play"></i>
                             </div>
                         </div>
-                        <div class="music-info">
-                            <h4>{{ $music['title'] }}</h4>
+                    </a>
+                    <div class="music-info">
+                        <h4>{{ $music['title'] }}</h4>
+                        @if(Auth::check())
+                        <div>
+                            <i class="fas fa-chevron-down dropmenu-btn"></i>
                         </div>
+                        <div class="dropmenu">
+                            <button class="add-to-playlist-btn" id="video-{{ $music['id'] }}">Add to Playlist</button>
+                        </div>
+                        @endif
                     </div>
-                </a>
+                </div>
             </div>
             @endforeach
         </div>

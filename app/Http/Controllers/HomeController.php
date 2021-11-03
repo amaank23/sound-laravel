@@ -8,6 +8,7 @@ use App\Models\Audio;
 use App\Models\Genre;
 use App\Models\Language;
 use App\Models\Playlist;
+use App\Models\PlaylistSong;
 use App\Models\Video;
 use Illuminate\Http\Request;
 
@@ -31,8 +32,8 @@ class HomeController extends Controller
     public function index()
     {
         $artists = Artist::limit(6)->get();
-        $latestMusics = Audio::limit(5)->get();
-        $latestVideos = Video::limit(5)->get();
+        $latestMusics = Audio::limit(4)->get();
+        $latestVideos = Video::limit(4)->get();
         return view('home', [
             'artists' => $artists,
             'latestMusics' => $latestMusics,
@@ -71,7 +72,10 @@ class HomeController extends Controller
     }
     public function playlists()
     {
-        $playlists = Playlist::all();
+        $playlists = Playlist::where('user_id', session('user_id'))->get();
+        foreach ($playlists as $playlist) {
+            $playlist->songs = count(PlaylistSong::where('playlist_id', $playlist['id'])->get());
+        }
         return view('playlists', ['playlists' => $playlists]);
     }
     public function search(Request $request)

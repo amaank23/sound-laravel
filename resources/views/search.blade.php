@@ -6,31 +6,37 @@
 
     <div class="section-title-container">
         <h2>Search Results</h2>
-        <div class="liner"></div>
     </div>
     @if(count($audios) > 0)
     <section class="latest-music">
         <div class="section-title-container">
             <h2>Musics</h2>
-            <div class="liner"></div>
         </div>
 
         <div class="row">
             @foreach($audios as $music)
             <div class="col-3">
-                <a href="{{ route('audio.single.get', ['id' => $music['id']]) }}">
-                    <div class="latest-music-container">
+                <div class="latest-music-container">
+                    <a href="{{ route('audio.single.get', ['id' => $music['id']]) }}">
                         <div class="music-img-container">
                             <img src="{{ asset('uploads/'.$music['cover']) }}" alt="">
                             <div class="playBtn-container">
                                 <i class="fas fa-play"></i>
                             </div>
                         </div>
-                        <div class="music-info">
-                            <h4>{{ $music['title'] }}</h4>
+                    </a>
+                    <div class="music-info">
+                        <h4>{{ $music['title'] }}</h4>
+                        @if(Auth::check())
+                        <div>
+                            <i class="fas fa-chevron-down dropmenu-btn"></i>
                         </div>
+                        <div class="dropmenu">
+                            <button class="add-to-playlist-btn" id="audio-{{ $music['id'] }}">Add to Playlist</button>
+                        </div>
+                        @endif
                     </div>
-                </a>
+                </div>
             </div>
             @endforeach
         </div>
@@ -40,25 +46,34 @@
     <section class="latest-music">
         <div class="section-title-container">
             <h2>Videos</h2>
-            <div class="liner"></div>
         </div>
 
         <div class="row">
             @foreach($videos as $music)
             <div class="col-3">
-                <a href="{{ route('video.single.get', ['id' => $music['id']]) }}">
-                    <div class="latest-music-container">
+                <div class="latest-music-container">
+
+                    <a href="{{ route('video.single.get', ['id' => $music['id']]) }}">
                         <div class="music-img-container">
                             <img src="{{ asset('uploads/'.$music['cover']) }}" alt="">
                             <div class="playBtn-container">
                                 <i class="fas fa-play"></i>
                             </div>
                         </div>
-                        <div class="music-info">
-                            <h4>{{ $music['title'] }}</h4>
+
+                    </a>
+                    <div class="music-info">
+                        <h4>{{ $music['title'] }}</h4>
+                        @if(Auth::check())
+                        <div>
+                            <i class="fas fa-chevron-down dropmenu-btn"></i>
                         </div>
+                        <div class="dropmenu">
+                            <button class="add-to-playlist-btn" id="video-{{ $music['id'] }}">Add to Playlist</button>
+                        </div>
+                        @endif
                     </div>
-                </a>
+                </div>
             </div>
             @endforeach
         </div>
@@ -69,7 +84,6 @@
     <section class="artists">
         <div class="section-title-container">
             <h2>Artists</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($artists as $artist)
@@ -95,7 +109,6 @@
     <section class="genres">
         <div class="section-title-container">
             <h2>Genres</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($genres as $genre)
@@ -115,7 +128,6 @@
     <section class="genres">
         <div class="section-title-container">
             <h2>Languages</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($languages as $language)
@@ -135,7 +147,6 @@
     <section class="genres">
         <div class="section-title-container">
             <h2>Albums</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
             @foreach($albums as $album)

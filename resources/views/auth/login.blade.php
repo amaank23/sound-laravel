@@ -1,59 +1,41 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
+@section('content')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/index.js') }}" defer></script>
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-</head>
-
-<body>
-
-    <div class="page-container">
-        <div class="second-half" style="background-image: url({{ asset('img/3.jpg') }}); background-size: cover;
+<div class="page-container">
+    <div class="second-half" style="background-image: url({{ asset('img/3.jpg') }}); background-size: cover;
     background-repeat: no-repeat;
     object-fit: contain;">
-            <div></div>
-        </div>
-        <div class="first-half">
-            <div class="logo-sec">
-                <h1>Sound</h1>
-                <div><i class="fas fa-music"></i></div>
-            </div>
-            <div class="form-to-enter" style="height: 80%;">
-                <h2>Login Now</h2>
-                <form action="{{ route('login.post') }}" method="post">
-                    @csrf
-                    <input type="text" name="email" class="form-control" placeholder="Email">
-                    @error('email')
-                    <small>{{ $message }}</small>
-                    @enderror
-                    @error('notRegistered')
-                    <small>{{ $message }}</small>
-                    @enderror
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                    @error('password')
-                    <small>{{ $message }}</small>
-                    @enderror
-                    <p><a href="{{ route('register') }}">Don't have a Account ? Click here to Register</a></p>
-                    <button class="form-control">Login</button>
-                </form>
-            </div>
-        </div>
-
+        <div></div>
     </div>
-</body>
+    <div class="first-half">
+        <div class="logo-sec">
+            <h1>Sound</h1>
+            <div><i class="fas fa-music"></i></div>
+        </div>
+        <div class="form-to-enter" style="height: 80%;">
+            <h2>Login Now</h2>
+            <form action="{{ route('login.post') }}" method="post">
+                @csrf
+                <input type="text" name="email" class="form-control" placeholder="Email">
+                @error('email')
+                <small>{{ $message }}</small>
+                @enderror
+                @error('notRegistered')
+                <small>{{ $message }}</small>
+                @enderror
+                <input type="password" name="password" class="form-control" placeholder="Password">
+                @error('password')
+                <small>{{ $message }}</small>
+                @enderror
+                <p><a href="{{ route('register') }}">Don't have a Account ? Click here to Register</a></p>
+                <button class="form-control">Login</button>
+            </form>
+        </div>
+    </div>
 
-</html>
+</div>
+@endsection
 
 
 

@@ -5,19 +5,39 @@
 
 <div class="contains">
 
-    <div class="genres">
+    <div class="genres playlist">
         <div class="section-title-container">
             <h2>Playlists</h2>
-            <div class="liner"></div>
         </div>
         <div class="row">
+            @if(count($playlists) == 0)
+            <p>No Playlist Found</p>
+            @endif
             @foreach($playlists as $playlist)
-            <div class="col-md-3">
-                <a href="">
+            <div class="col-md-2">
+                <a href="{{ route('playlist.get', ['id' => $playlist['id']]) }}">
                     <div class="genre-container">
-                        <h2>{{ $playlist['name'] }}</h2>
+                        <i class="fas fa-headphones-alt"></i>
                     </div>
                 </a>
+                <div class="playlist-div">
+                    <div class="names-container">
+
+                        <h2>{{ $playlist['name'] }}</h2>
+                        <p>{{ $playlist['songs'] }} Songs</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-chevron-down dropmenu-btn"></i>
+                    </div>
+                    <div class="dropmenu">
+                        <form action="{{ route('playlist.delete', ['id' => $playlist['id']]) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button>Delete</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
             @endforeach
 

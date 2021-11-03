@@ -33,8 +33,8 @@
                     <div class="reviews">
                         <div class="section-title-container">
                             <h2>Reviews & Ratings</h2>
-                            <div class="liner"></div>
                         </div>
+                        @if(Auth::check())
                         <form action="{{ route('video.review.store', ['id' => $video['id']]) }}" method="POST">
                             @csrf
                             <textarea rows="4" class="form-control" name="review" id="" cols="30" rows="10"></textarea>
@@ -55,7 +55,9 @@
                             <input type="hidden" name="song_type" value="video">
                             <button class="form-control" type="submit">Review</button>
                         </form>
+                        @endif
                         <div class="reviews-colection">
+                            @if(count($reviews) > 0)
                             @foreach($reviews as $review)
                             <div class="review-container">
                                 <div class="first">
@@ -68,6 +70,9 @@
                                 </div>
                             </div>
                             @endforeach
+                            @else
+                            <p>Not Reviewed Yet</p>
+                            @endif
                         </div>
                     </div>
                 </div>
